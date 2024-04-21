@@ -13,10 +13,10 @@ void printSc(Object s, int x, int y) {
 void trapezoid4(int tlx, int trx, int blx, int brx, int ty, int by, color c) {
   display.noStroke();
   display.beginShape();
-  display.vertex(0, ty);
-  display.vertex(scWidth, ty);
-  display.vertex(scWidth, by);
-  display.vertex(0, by);  
+  display.vertex(tlx, ty);
+  display.vertex(trx, ty);
+  display.vertex(brx, by);
+  display.vertex(blx, by);  
   display.endShape(CLOSE);
   
   display.stroke(c);
@@ -57,6 +57,7 @@ void trapezoid(int tlx, int trx, int blx, int brx, int ty, int by) {
 
 
 void inputTest() {
+  display.strokeWeight(1);
   if (up)
     display.fill(255);
   else
@@ -84,6 +85,11 @@ void inputTest() {
 }
 
 // logic -------------------------------------------------------------------------------------------------------------
+int sign(float a) {
+  if (a == 0) return 0;
+  return a < 0 ? -1 : 1;
+}
+
 float appr(float val, float tar, float dval) {
   return tar > val ? min(val + dval, tar) : max(val - dval, tar);
 }
