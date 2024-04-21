@@ -2,6 +2,7 @@ int shakeLen = 0, shake = 0;
 float shakeStr = 0;
 
 int freeze = 0;
+int flash = 0;
 
 float dT = 0;
 int scWidth = 600, scHeight = 600;
@@ -9,7 +10,12 @@ int scWidth = 600, scHeight = 600;
 PGraphics display;
 
 PImage dedede;
-PImage tree;
+PImage cloud1;
+PImage cloud2;
+PImage coin;
+PImage background;
+PImage crosshair;
+
 
 void setup() {
   // main window
@@ -17,13 +23,21 @@ void setup() {
   size(600,600, P2D);
   surface.setTitle("De-de-de that's the name you should know");
   
-  
   dedede = loadImage("data/DEDEDE.png");
-  tree = loadImage("data/tree.png");
+  
+  cloud1 = loadImage("data/nube1.png");
+  cloud2 = loadImage("data/nube2.png");
+  
+  coin = loadImage("data/coin.png");
+  
+  background = loadImage("data/background.png");
+  
+  crosshair = loadImage("data/crosshair.png");
+  surface.setCursor(crosshair, 8, 8);
   
   display = createGraphics(scWidth, scHeight);
 
-
+  loadSprites();
   
   makeRoad();
 }
@@ -35,14 +49,30 @@ void _update() {
 }
 
 void _draw() {
-  display.background(255);
-    
   
+  
+  display.background(255);
+  for (int i = 0; i < scHeight / 3.0f; i++) {
+    display.stroke(map(i, 0, scHeight/3.0f, 240, 255));
+    display.line(0, i, scWidth, i);
+  }
+
+  
+
+  display.image(cloud1, millis()/1000.0f + scWidth/2, 100, 100, 50);
+  display.image(cloud2, millis()/750.0f + scWidth*2/3,50, 100, 50);
   drawRoad();
-  drawPlayer();
+  //drawPlayer();
   printSc(cameraZ);
   inputTest();
+  
+  display.noStroke();
+  display.fill(255, (float)flash * 255 / 10);
+  display.rect(0, 0, scWidth, scHeight);
+  flash = max(flash - 1, 0);
+  
 }
+
 
 
 
@@ -88,7 +118,7 @@ void draw() {
   int xOff = 0, yOff = 0;
   if (shake < shakeLen) {
     //float strength = shakeStr;
-    float strength = easeInOut(shakeStr, shakeStr/2, (float)shake/shakeLen);
+    float strength = easeOut(shakeStr, shakeStr/2, (float)shake/shakeLen);
     //xOff = round(random(-strength, strength));
     yOff = round(random(-strength, strength));
     shake++;
