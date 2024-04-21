@@ -6,12 +6,14 @@ boolean down = false;
 boolean right = false;
 boolean i = false;
 boolean k = false;
+boolean c = false;
+
 
 boolean upp = false;
 boolean leftp = false;
 boolean downp = false;
 boolean rightp = false;
-
+boolean cp = false;
 
 int axisX = 0;
 int axisY = 0;
@@ -91,6 +93,10 @@ void keyPressed() {
   if (key == 'k' || key == 'K') {
     k = true;
   }
+  
+  if (key == 'c' || key == 'C') {
+    c = true;
+  }
 }
  
 void keyReleased() {
@@ -116,4 +122,7 @@ void keyReleased() {
     i = false;
   if (key == 'k' || key == 'K')
     k = false;
+  if (key == 'c' || key == 'C')
+    c = false;
+ 
 }
